@@ -1,15 +1,42 @@
-require_relative 'config/environment'
- 
+require 'bundler'
+Bundler.require
+require_relative 'models/questions'
+
 class App < Sinatra::Base
-  get '/'do 
-     "my name is hadja"
+    
+  get '/' do 
+    erb :index
   end 
   
-  get '/'do
-   "my hometown is idk' do"
+  get '/questions' do
+    erb :questions
+  end
+  
+  get '/oily' do 
+    erb :oily 
+  end
+  
+  get '/dry' do
+     erb :dry
   end 
   
-  get'/'do 
-    "my favorite song is_"
+  post '/results' do
+  answers = params.values
+  @user_input = Array.new
+  answers.each do |answers|
+  @user_input.push(answers)
+  end
+
+@skin = skin_determinant(@user_input)
+  if @skin == "oily"
+    erb :oily 
+  elsif @skin == "dry"
+    erb :dry
+  elsif @skin == "combinational"
+    erb :combinational
+  else @skin == "balanced"
+    erb :balanced
+  end
   end
 end
+
